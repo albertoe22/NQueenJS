@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <link rel="stylesheet" href = "style.css">
+        <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:300,500&display=swap" rel="stylesheet">
+        <title>NQueen</title>
+    </head>
+    <body>
+        <header>NQueen</header>
+        <h1>by Albert Truong</h1>
+        <button onclick = "reset()">Reset</button>
+        <button onclick = "changeGrid()">Grid Size</button>
+        <div id ="container"></div>
+    </body>
+
+
+    <script>    
+    var n = 4;
+    var board = [];
+
+    function createBoard(size) {
+        for (var i = 0; i < size; i++) {
+            board[i] = [];
+            var row = document.createElement("div");
+            row.className = "row";
+            for (var j = 0; j < size; j++) {
+                board[i][j] = 0;
+                var div = document.createElement("div");
+                div.className = "square";
+                div.id = "square" + i + j;
+
+                div.style.width = 500/size + "px";
+                div.style.height = 500/size + "px";
+                row.appendChild(div);
+                
+            }
+            document.getElementById("container").appendChild(row);
+        }
+
+        for (var i = 0; i < size; i++) {
+            for (var j = 0; j< size; j ++) {
+                if ((i + j-1) % 2 == 0) { 
+                document.getElementById("square" + i + j).style.background = "rgb(0,0,0)";
+                }
+            }
+        }
+    }
+    
+
+
+    // Method checks if given queen position is valid by checking previous rows and diagonals
+    // col = x; row = y
+    function isValid(row, col) {
+        let i, j;
+
+        for (i = 0; i < col; i++) {
+            if (board[row][i] == 1) {
+                return false;
+            }
+        }
+        // upper diagonal
+        for (i = row, j = col; i >= 0  && j >= 0; i--, j--) {
+            if (board[i][j] == 1) {
+                return false;
+            }
+        }
+        // lower diagonal
+        for (i = row,  j = col; j >=0 && i < n; j--, i++) {
+            if (board[i][j] == 1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function changeColor(name, color) {
+        document.getElementById(name).style.background = color;
+    }
+
+    function NQueen(col) {
+
+        if (col == n) {
+           // printBoard();
+            return true;
+        }
+        // Checks if given move is valid for all positions in the column
+        for (let i = 0; i < n; i++) {
+            if (isValid(i,col)) {
+                board[i][col] = 1;
+                let square = "square" + i + col;
+                let color = document.getElementById(square).style.background;
+                //document.getElementById("square" + i + col).style.background = "rgb(220,220,220)";    
+                setTimeout(function() {
+                    changeColor(square, "rgb(220,220,220)");
+                }, 2000);
+                //setTimeout(function() {document.getElementById("square" + i + col).style.background = "rgb(220,220,220)"}, 1000);
+                // This creates a "temporary board state". It checks to see if the next column has a valid position at all
+                // If there is no valid position, it goes back to the previous board state, and makes the Queen's position
+                // a 0. Then it goes to the next valid position for that board state.
+                if (NQueen(col+1)) {
+                    return true;
+                }
+                board[i][col] = 0;
+                document.getElementById(square).style.background = color;
+                //setTimeout(function() {document.getElementById("square" + i + col).style.background = color}, 2000);
+            }
+        }
+
+        // if there is no solution it returns false
+        return false;
+    }
+
+
+    createBoard(n);
+    if (NQueen(0)){
+        console.log("Solved");
+    }
+
+    </script>
+
+
+</html>

@@ -1,0 +1,60 @@
+header {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 40px;
+    color: black;
+}
+
+h1 {
+    margin: 0px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: lighter;
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+}
+
+body {
+    text-align: center;
+    margin:0;
+    height: 100%;
+    background-color: #ffffff;
+}
+button {
+    background-color: black; 
+    border: none;
+    margin: 10px;
+    color: #fcf9ea;
+    padding: 15px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+label {
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
+
+
+
+#container { 
+    width: 500px;
+    height: 500px;
+    position: relative;
+    margin: 0 auto;
+    overflow: hidden;
+    border: solid;
+    border-width: .75px .75px;
+    background-color: white;
+
+}
+
+.row {
+    display: inline-block;
+
+}
+
+.square {
+    height: 25px;
+    width: 25px;
+}
