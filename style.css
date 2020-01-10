@@ -16,8 +16,8 @@ body {
     text-align: center;
     margin:0;
     height: 100%;
-    background-color: #ffffff;
-}
+    background-color: rgb(255, 255, 255);
+}   
 button {
     background-color: black; 
     border: none;

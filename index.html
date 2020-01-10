@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
 <html>
-
     <head>
         <link rel="stylesheet" href = "style.css">
         <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:300,500&display=swap" rel="stylesheet">
@@ -10,13 +9,12 @@
     <body>
         <header>NQueen</header>
         <h1>by Albert Truong</h1>
-        <button onclick = "reset()">Reset</button>
         <button onclick = "changeGrid()">Grid Size</button>
         <div id ="container"></div>
     </body>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
-    var n = 4;
+    var n = 5;
     var board = [];
     var myVar;
     var arr = [];
@@ -26,7 +24,8 @@
 
     };
     var key = 0;
-    var f = 0;
+    var timeoutID;
+    var delay = 1000;
 
     function createBoard(size) {
         for (var i = 0; i < size; i++) {
@@ -51,9 +50,12 @@
 
         for (var i = 0; i < size; i++) {
             for (var j = 0; j< size; j ++) {
+                var square = "square" + i+j;
                 if ((i + j-1) % 2 == 0) { 
-                var square = "square" + i + j;
-                document.getElementById(square).style.background = "rgb(0,0,0)";
+                    document.getElementById(square).style.background = "rgb(0,0,0)";
+                }
+                else {
+                    document.getElementById(square).style.background = "rgb(255,255,255)";
                 }
             }
         }
@@ -71,7 +73,7 @@
         }
         // upper diagonal
         for (i = row, j = col; i >= 0  && j >= 0; i--, j--) {
-            if (board[i][j] == 1) {
+            if (board[i][j] == 1) { 
                 return false;
             }
         }
@@ -88,8 +90,47 @@
         var name = arr[num].square;
         var color = arr[num].color;
         document.getElementById(name).style.background = color;
-        if (num < arr.length-1) setTimeout(function(){myFunction(num+1)}, 1000);
+        console.log(num);
+        if (num < arr.length-1) timeoutID = setTimeout(function(){myFunction(num+1)}, delay);
     }
+
+    // function Initial() {
+    //     var person = prompt("Enter a number between 4-8", 4);
+    //     if (person <4 || person > 8) {
+    //         Initial();
+    //     }
+    //     n = person;
+    //     createBoard(person);
+    //     if (NQueen(0)) {
+    //         myFunction(0);
+    //     }
+    // }
+
+    function changeGrid() {
+        var person = prompt("Enter a number between 4-8", 4);
+        if (person <4 || person > 8) {
+            changeGrid();
+        }
+        n = person;
+        delay = person > 5 ? 500: 1000; 
+        reset();
+        clear();
+        createBoard(person);
+        if (NQueen(0)) {
+            myFunction(0);
+        }
+    }
+
+    function reset() {
+        $('.row').remove();
+        arr.length = 0;
+        key = 0;
+    }
+
+    function clear() {
+        clearTimeout(timeoutID);
+    }
+
     
     function NQueen(col) {
         if (col == n) {
@@ -98,21 +139,21 @@
         // Checks if given move is valid for all positions in the column
         for (var i = 0; i < n; i++) {
             let square = "square" + i + col;
-            let originalColor = document.getElementById(square).style.background;
             var x = {square: square, color: "rgb(255,0,0)"};
             arr[key] =x;
             key++;
+            let originalColor ="";
+            if ((i+col)%2 ==0 ) {
+                originalColor = "rgb(255,255,255)";
+            }
+            else {
+                originalColor = "rgb(0,0,0)";
+            }
             if (isValid(i,col)) {
                 board[i][col] = 1;
-                if (NQueen(col+1)) { 
-                    requestAnimationFrame(NQueen);   
+                if (NQueen(col+1)) {
                     return true;
                 }
-
-                x = {square: square, color: originalColor};
-                arr[key] = x;
-                key++;
-                board[i][col] = 0;
 
             }
             x = {square: square, color: originalColor};
@@ -122,21 +163,6 @@
         }
         return false;
     }
-
-
-    //setTimeout(function() {myFunction(square, color)}, 2000);
-    //setTimeout(myFunction, 2000, square, color);
-    //setTimeout(function() {document.getElementById("square" + i + col).style.background = color}, 2000);
-
-
-    createBoard(n);
-    if (NQueen(0)){
-        console.log("Solved");
-        console.log(arr.length);
-        myFunction(0);
-    }
-
-
     </script>
 
 
