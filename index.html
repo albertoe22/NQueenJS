@@ -15,10 +15,18 @@
         <div id ="container"></div>
     </body>
 
-
-    <script>    
+    <script>
     var n = 4;
     var board = [];
+    var myVar;
+    var arr = [];
+    var position = {
+        square: "",
+        color:""
+
+    };
+    var key = 0;
+    var f = 0;
 
     function createBoard(size) {
         for (var i = 0; i < size; i++) {
@@ -29,11 +37,13 @@
                 board[i][j] = 0;
                 var div = document.createElement("div");
                 div.className = "square";
-                div.id = "square" + i + j;
+                var x = "square" + j + i;
+                div.id = x;
 
                 div.style.width = 500/size + "px";
                 div.style.height = 500/size + "px";
                 row.appendChild(div);
+                
                 
             }
             document.getElementById("container").appendChild(row);
@@ -42,19 +52,18 @@
         for (var i = 0; i < size; i++) {
             for (var j = 0; j< size; j ++) {
                 if ((i + j-1) % 2 == 0) { 
-                document.getElementById("square" + i + j).style.background = "rgb(0,0,0)";
+                var square = "square" + i + j;
+                document.getElementById(square).style.background = "rgb(0,0,0)";
                 }
             }
         }
     }
-    
-
 
     // Method checks if given queen position is valid by checking previous rows and diagonals
     // col = x; row = y
     function isValid(row, col) {
         let i, j;
-
+        
         for (i = 0; i < col; i++) {
             if (board[row][i] == 1) {
                 return false;
@@ -75,48 +84,58 @@
         return true;
     }
 
-    function changeColor(name, color) {
+    function myFunction(num) {
+        var name = arr[num].square;
+        var color = arr[num].color;
         document.getElementById(name).style.background = color;
+        if (num < arr.length-1) setTimeout(function(){myFunction(num+1)}, 1000);
     }
-
+    
     function NQueen(col) {
-
         if (col == n) {
-           // printBoard();
             return true;
         }
         // Checks if given move is valid for all positions in the column
-        for (let i = 0; i < n; i++) {
+        for (var i = 0; i < n; i++) {
+            let square = "square" + i + col;
+            let originalColor = document.getElementById(square).style.background;
+            var x = {square: square, color: "rgb(255,0,0)"};
+            arr[key] =x;
+            key++;
             if (isValid(i,col)) {
                 board[i][col] = 1;
-                let square = "square" + i + col;
-                let color = document.getElementById(square).style.background;
-                //document.getElementById("square" + i + col).style.background = "rgb(220,220,220)";    
-                setTimeout(function() {
-                    changeColor(square, "rgb(220,220,220)");
-                }, 2000);
-                //setTimeout(function() {document.getElementById("square" + i + col).style.background = "rgb(220,220,220)"}, 1000);
-                // This creates a "temporary board state". It checks to see if the next column has a valid position at all
-                // If there is no valid position, it goes back to the previous board state, and makes the Queen's position
-                // a 0. Then it goes to the next valid position for that board state.
-                if (NQueen(col+1)) {
+                if (NQueen(col+1)) { 
+                    requestAnimationFrame(NQueen);   
                     return true;
                 }
-                board[i][col] = 0;
-                document.getElementById(square).style.background = color;
-                //setTimeout(function() {document.getElementById("square" + i + col).style.background = color}, 2000);
-            }
-        }
 
-        // if there is no solution it returns false
+                x = {square: square, color: originalColor};
+                arr[key] = x;
+                key++;
+                board[i][col] = 0;
+
+            }
+            x = {square: square, color: originalColor};
+                arr[key] = x;
+                key++;
+                board[i][col] = 0;
+        }
         return false;
     }
+
+
+    //setTimeout(function() {myFunction(square, color)}, 2000);
+    //setTimeout(myFunction, 2000, square, color);
+    //setTimeout(function() {document.getElementById("square" + i + col).style.background = color}, 2000);
 
 
     createBoard(n);
     if (NQueen(0)){
         console.log("Solved");
+        console.log(arr.length);
+        myFunction(0);
     }
+
 
     </script>
 
