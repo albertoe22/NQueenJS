@@ -15,10 +15,11 @@ Solution: JavaScript Execution and Page Rendering Occur at the same time
 To solve this problem, I created an array that would hold square objects that contained the name of the square and the color associated with it. I then made a function
 to update the color of the square, while "yielding" control of the browser by using a setTimeout that executes a recursive call until I iterate through the whole array.
 
-Source: https://stackoverflow.com/questions/8110905/javascript-a-loop-with-innerhtml-is-not-updating-during-loop-execution
 
 2. Backtracking Algorithm
 This algorithm helps to solve problems that involve constraint satisfaction. The algorithm builds upon a solution, and removes a possibility if it no longer can be apart
 of a valid solution.
 
 Link:   https://albertoe22.github.io/NQueenJS/
+
+[Source](https://stackoverflow.com/questions/8110905/javascript-a-loop-with-innerhtml-is-not-updating-during-loop-execution)
