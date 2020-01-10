@@ -20,6 +20,8 @@ to update the color of the square, while "yielding" control of the browser by us
 This algorithm helps to solve problems that involve constraint satisfaction. The algorithm builds upon a solution, and removes a possibility if it no longer can be apart
 of a valid solution.
 
+For this specific problem, a Queen cannot be in the same row/column/diagonal as any other Queen. After checking that a position is valid, it places the queen, and does a recursive call on the next column to check if there is a valid position in that column. If there isn't a valid position in that column, that means a previous candidate is blocking/preventing a solution to be found so it needs to backtrack and remove the previous solution before continuing.
+
 Link:   https://albertoe22.github.io/NQueenJS/
 
 [Source](https://stackoverflow.com/questions/8110905/javascript-a-loop-with-innerhtml-is-not-updating-during-loop-execution)
