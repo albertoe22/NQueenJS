@@ -17,11 +17,14 @@
     var n = 5;
     var board = [];
     var myVar;
+
+    // arr holds square objects
     var arr = [];
+
+    // Square object
     var position = {
         square: "",
         color:""
-
     };
     var key = 0;
     var timeoutID;
@@ -48,6 +51,7 @@
             document.getElementById("container").appendChild(row);
         }
 
+        // Sets the initial chess board colors
         for (var i = 0; i < size; i++) {
             for (var j = 0; j< size; j ++) {
                 var square = "square" + i+j;
@@ -86,6 +90,7 @@
         return true;
     }
 
+    // Runs through the array of square objects, and then changes the color of based on the color associated to the object(square).
     function myFunction(num) {
         var name = arr[num].square;
         var color = arr[num].color;
@@ -94,24 +99,15 @@
         if (num < arr.length-1) timeoutID = setTimeout(function(){myFunction(num+1)}, delay);
     }
 
-    // function Initial() {
-    //     var person = prompt("Enter a number between 4-8", 4);
-    //     if (person <4 || person > 8) {
-    //         Initial();
-    //     }
-    //     n = person;
-    //     createBoard(person);
-    //     if (NQueen(0)) {
-    //         myFunction(0);
-    //     }
-    // }
-
+    // Prompts user for grid size from 4-8. Size of 2 & 3 have no solution, sizes above 8 are too big and take too much time to solve
     function changeGrid() {
         var person = prompt("Enter a number between 4-8", 4);
         if (person <4 || person > 8) {
             changeGrid();
         }
         n = person;
+
+        // Sets the delay depending on the size of the board
         delay = person > 5 ? 500: 1000; 
         reset();
         clear();
@@ -122,11 +118,16 @@
     }
 
     function reset() {
+        // Deletes the '.row' divs in the HTML
         $('.row').remove();
+
+        // Empties the array of square objects
         arr.length = 0;
+        // reset key
         key = 0;
     }
 
+    // Clears the setTimeout, which allows us to use setTimeout again
     function clear() {
         clearTimeout(timeoutID);
     }
@@ -139,6 +140,8 @@
         // Checks if given move is valid for all positions in the column
         for (var i = 0; i < n; i++) {
             let square = "square" + i + col;
+
+            // Adds square object to the array, this is placing the queen 
             var x = {square: square, color: "rgb(255,0,0)"};
             arr[key] =x;
             key++;
@@ -156,6 +159,9 @@
                 }
 
             }
+
+            // Adds square object to the array, this is removing the queen if it is either an invalid placement
+            // Or is no longer valid because of the backtracking algorithm
             x = {square: square, color: originalColor};
                 arr[key] = x;
                 key++;
@@ -164,6 +170,5 @@
         return false;
     }
     </script>
-
 
 </html>
