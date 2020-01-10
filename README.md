@@ -3,6 +3,8 @@ Visual representation/demo of NQueen Problem
 
 NOTE: Red Squares = Queen placement, when they disappear that means it was either placed in an invalid position or the position cannot be part of the final solution.
 
+Link:   https://albertoe22.github.io/NQueenJS/
+
 Problems Encountered and Lessons Learned: 
 1. When running DOM manipulating code, browser would not update after every iteration of the recursive function.
 When trying to change the color in the backtracking algorithm, it would update all squares at the end, which gave the final answer, but was not what I was
@@ -22,6 +24,5 @@ of a valid solution.
 
 For this specific problem, a Queen cannot be in the same row/column/diagonal as any other Queen. After checking that a position is valid, it places the queen, and does a recursive call on the next column to check if there is a valid position in that column. If there isn't a valid position in that column, that means a previous candidate is blocking/preventing a solution to be found so it needs to backtrack and remove the previous solution before continuing.
 
-Link:   https://albertoe22.github.io/NQueenJS/
 
 [Source](https://stackoverflow.com/questions/8110905/javascript-a-loop-with-innerhtml-is-not-updating-during-loop-execution)
